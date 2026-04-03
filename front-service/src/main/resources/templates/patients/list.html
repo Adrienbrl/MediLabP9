@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients | MediLab</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page-shell">
+    <header class="hero">
+        <div>
+            <p class="eyebrow">Sprint 1</p>
+            <h1>Dossiers patients</h1>
+            <p class="subtitle">Première interface sobre pour consulter, ajouter et modifier les données patient.</p>
+        </div>
+        <a class="button button-primary" th:href="@{/patients/new}">Ajouter un patient</a>
+    </header>
+
+    <section th:if="${successMessage}" class="alert alert-success">
+        <p th:text="${successMessage}"></p>
+    </section>
+
+    <section class="panel">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Date de naissance</th>
+                    <th>Genre</th>
+                    <th>Téléphone</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="patient : ${patients}">
+                    <td th:text="${patient.id()}"></td>
+                    <td th:text="${patient.lastName()}"></td>
+                    <td th:text="${patient.firstName()}"></td>
+                    <td th:text="${patient.birthDate()}"></td>
+                    <td th:text="${patient.gender()}"></td>
+                    <td th:text="${patient.phone()} ?: '-'"></td>
+                    <td>
+                        <a class="button button-secondary" th:href="@{'/patients/' + ${patient.id()}}">Ouvrir</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

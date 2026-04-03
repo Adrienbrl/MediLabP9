@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | MediLab'"></title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page-shell">
+    <header class="hero">
+        <div>
+            <p class="eyebrow">Sprint 1</p>
+            <h1 th:text="${pageTitle}"></h1>
+            <p class="subtitle">Les champs adresse et téléphone restent optionnels pour un dossier valide.</p>
+        </div>
+        <a class="button button-secondary" th:href="@{/patients}">Retour à la liste</a>
+    </header>
+
+    <section class="panel form-panel">
+        <form th:action="${formAction}" th:object="${patientForm}" method="post" class="patient-form">
+            <div class="form-grid">
+                <label>
+                    <span>Prénom</span>
+                    <input type="text" th:field="*{firstName}" placeholder="Prénom">
+                    <small class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
+                </label>
+
+                <label>
+                    <span>Nom</span>
+                    <input type="text" th:field="*{lastName}" placeholder="Nom">
+                    <small class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                </label>
+
+                <label>
+                    <span>Date de naissance</span>
+                    <input type="date" th:field="*{birthDate}">
+                    <small class="error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></small>
+                </label>
+
+                <label>
+                    <span>Genre</span>
+                    <select th:field="*{gender}">
+                        <option value="">Choisir</option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                    <small class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></small>
+                </label>
+
+                <label class="full-width">
+                    <span>Adresse</span>
+                    <input type="text" th:field="*{address}" placeholder="Adresse postale">
+                </label>
+
+                <label class="full-width">
+                    <span>Téléphone</span>
+                    <input type="text" th:field="*{phone}" placeholder="Numéro de téléphone">
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="button button-primary">Enregistrer</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

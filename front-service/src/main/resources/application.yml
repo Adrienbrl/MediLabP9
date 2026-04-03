@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: front-service
+  thymeleaf:
+    cache: false
+
+medilab:
+  patient-service:
+    base-url: http://localhost:8081
+    username: medilab
+    password: medilab

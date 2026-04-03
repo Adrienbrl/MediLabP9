@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: front-service
+          uri: ${medilab.services.front-base-url}
+          predicates:
+            - Path=/,/patients/**,/login,/css/**,/error
+        - id: patient-service
+          uri: ${medilab.services.patient-base-url}
+          predicates:
+            - Path=/api/patients/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+medilab:
+  services:
+    front-base-url: http://localhost:8082
+    patient-base-url: http://localhost:8081
