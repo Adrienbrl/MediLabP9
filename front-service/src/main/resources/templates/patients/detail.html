@@ -58,6 +58,47 @@
                 </div>
             </dl>
         </article>
+
+        <article class="panel notes-card">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Sprint 2</p>
+                    <h2>Notes du médecin</h2>
+                </div>
+            </div>
+
+            <div class="notes-list" th:if="${not #lists.isEmpty(notes)}">
+                <article class="note-item" th:each="note : ${notes}">
+                    <div class="note-meta">
+                        <strong th:text="${note.patientName()}"></strong>
+                        <span th:text="${#temporals.format(note.createdAt(), 'dd/MM/yyyy HH:mm')}"></span>
+                    </div>
+                    <p class="note-content" th:text="${note.content()}"></p>
+                </article>
+            </div>
+
+            <p class="empty-state" th:if="${#lists.isEmpty(notes)}">
+                Aucune note n'a encore été ajoutée pour ce patient.
+            </p>
+        </article>
+
+        <article class="panel form-panel">
+            <h2>Ajouter une note</h2>
+            <form th:action="@{'/patients/' + ${patient.id()} + '/notes'}" th:object="${noteForm}" method="post" class="patient-form">
+                <input type="hidden" th:field="*{patientId}">
+                <input type="hidden" th:field="*{patientName}">
+
+                <label>
+                    <span>Note</span>
+                    <textarea th:field="*{content}" rows="7" placeholder="Saisir une note médecin..."></textarea>
+                    <small class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></small>
+                </label>
+
+                <div class="form-actions">
+                    <button type="submit" class="button button-primary">Ajouter la note</button>
+                </div>
+            </form>
+        </article>
     </section>
 </main>
 </body>

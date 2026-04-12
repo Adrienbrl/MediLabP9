@@ -1,0 +1,11 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: notes-service
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/medilab_notes}
+      auto-index-creation: true
+

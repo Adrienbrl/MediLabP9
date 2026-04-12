@@ -1,5 +1,7 @@
 package com.medilabo.front.patient;
 
+import com.medilabo.front.note.PatientNoteClient;
+import com.medilabo.front.note.PatientNoteForm;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PatientController {
 
     private final PatientClient patientClient;
+    private final PatientNoteClient patientNoteClient;
 
-    public PatientController(PatientClient patientClient) {
+    public PatientController(PatientClient patientClient, PatientNoteClient patientNoteClient) {
         this.patientClient = patientClient;
+        this.patientNoteClient = patientNoteClient;
     }
 
     @GetMapping
@@ -55,7 +59,7 @@ public class PatientController {
 
     @GetMapping("/{id}")
     public String viewPatient(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("patient", patientClient.getPatient(id));
+        loadPatientDetailPage(id, model, new PatientNoteForm());
         return "patients/detail";
     }
 
@@ -87,5 +91,38 @@ public class PatientController {
         patientClient.updatePatient(id, patientForm);
         redirectAttributes.addFlashAttribute("successMessage", "Le patient a bien été mis à jour.");
         return "redirect:/patients/" + id;
+    }
+
+    @PostMapping("/{id}/notes")
+    public String createPatientNote(
+            @PathVariable("id") Long id,
+            @Valid @ModelAttribute("noteForm") PatientNoteForm noteForm,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            loadPatientDetailPage(id, model, noteForm);
+            return "patients/detail";
+        }
+
+        patientNoteClient.createNote(noteForm);
+        redirectAttributes.addFlashAttribute("successMessage", "La note a bien été ajoutée.");
+        return "redirect:/patients/" + id;
+    }
+
+    private void loadPatientDetailPage(Long id, Model model, PatientNoteForm noteForm) {
+        PatientView patient = patientClient.getPatient(id);
+
+        if (noteForm.getPatientId() == null) {
+            noteForm.setPatientId(patient.id());
+        }
+        if (noteForm.getPatientName() == null || noteForm.getPatientName().isBlank()) {
+            noteForm.setPatientName(patient.firstName() + " " + patient.lastName());
+        }
+
+        model.addAttribute("patient", patient);
+        model.addAttribute("notes", patientNoteClient.getNotesByPatientId(id));
+        model.addAttribute("noteForm", noteForm);
     }
 }

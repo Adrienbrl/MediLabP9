@@ -14,3 +14,6 @@ logs/
 *.log
 
 .mvn/wrapper/maven-wrapper.jar
+
+tools/mongodb-macos-aarch64--8.0.18/
+var/mongodb/

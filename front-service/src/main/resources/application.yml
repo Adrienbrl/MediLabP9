@@ -12,3 +12,5 @@ medilab:
     base-url: http://localhost:8081
     username: medilab
     password: medilab
+  notes-service:
+    base-url: http://localhost:8083
