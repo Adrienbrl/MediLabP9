@@ -12,7 +12,7 @@
         <div>
             <p class="eyebrow">Dossier patient</p>
             <h1 th:text="${patient.firstName() + ' ' + patient.lastName()}"></h1>
-            <p class="subtitle">Vue individuelle du patient pour le sprint 1.</p>
+            <p class="subtitle">Vue individuelle du patient avec ses notes médicales et son niveau de risque.</p>
         </div>
         <div class="hero-actions">
             <a class="button button-secondary" th:href="@{/patients}">Retour</a>
@@ -57,6 +57,23 @@
                     <dd th:text="${patient.phone()} ?: '-'"></dd>
                 </div>
             </dl>
+        </article>
+
+        <article class="panel assessment-card" th:classappend="${' risk-' + #strings.toLowerCase(#strings.replace(assessment.riskLevel(), '_', '-'))}">
+            <div>
+                <p class="eyebrow">Sprint 3</p>
+                <h2>Évaluation du risque diabète</h2>
+            </div>
+            <div class="risk-badge" th:text="${assessment.riskLabel()}"></div>
+            <p>
+                <strong th:text="${assessment.triggerCount()}"></strong>
+                <span> déclencheur(s) détecté(s) dans les notes médicales.</span>
+            </p>
+            <p>
+                <span>Âge calculé du patient : </span>
+                <strong th:text="${assessment.age()}"></strong>
+                <span> ans.</span>
+            </p>
         </article>
 
         <article class="panel notes-card">

@@ -14,3 +14,5 @@ medilab:
     password: medilab
   notes-service:
     base-url: http://localhost:8083
+  assessment-service:
+    base-url: http://localhost:8084

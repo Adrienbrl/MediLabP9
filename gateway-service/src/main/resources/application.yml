@@ -19,6 +19,10 @@ spring:
           uri: ${medilab.services.notes-base-url}
           predicates:
             - Path=/api/notes/**
+        - id: assessment-service
+          uri: ${medilab.services.assessment-base-url}
+          predicates:
+            - Path=/api/assessments/**
 
 management:
   endpoints:
@@ -31,3 +35,4 @@ medilab:
     front-base-url: http://localhost:8082
     patient-base-url: http://localhost:8081
     notes-base-url: http://localhost:8083
+    assessment-base-url: http://localhost:8084

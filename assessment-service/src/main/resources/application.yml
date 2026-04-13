@@ -1,0 +1,19 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: assessment-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+medilab:
+  services:
+    patient-base-url: http://localhost:8081
+    notes-base-url: http://localhost:8083
+    username: medilab
+    password: medilab

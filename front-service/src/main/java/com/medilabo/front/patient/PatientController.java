@@ -1,5 +1,6 @@
 package com.medilabo.front.patient;
 
+import com.medilabo.front.assessment.DiabetesAssessmentClient;
 import com.medilabo.front.note.PatientNoteClient;
 import com.medilabo.front.note.PatientNoteForm;
 import jakarta.validation.Valid;
@@ -19,10 +20,16 @@ public class PatientController {
 
     private final PatientClient patientClient;
     private final PatientNoteClient patientNoteClient;
+    private final DiabetesAssessmentClient diabetesAssessmentClient;
 
-    public PatientController(PatientClient patientClient, PatientNoteClient patientNoteClient) {
+    public PatientController(
+            PatientClient patientClient,
+            PatientNoteClient patientNoteClient,
+            DiabetesAssessmentClient diabetesAssessmentClient
+    ) {
         this.patientClient = patientClient;
         this.patientNoteClient = patientNoteClient;
+        this.diabetesAssessmentClient = diabetesAssessmentClient;
     }
 
     @GetMapping
@@ -123,6 +130,7 @@ public class PatientController {
 
         model.addAttribute("patient", patient);
         model.addAttribute("notes", patientNoteClient.getNotesByPatientId(id));
+        model.addAttribute("assessment", diabetesAssessmentClient.assessPatient(id));
         model.addAttribute("noteForm", noteForm);
     }
 }

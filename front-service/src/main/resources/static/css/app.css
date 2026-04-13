@@ -186,6 +186,45 @@ tbody tr:last-child td {
     font-size: 1rem;
 }
 
+.assessment-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px 20px;
+    align-items: start;
+}
+
+.assessment-card p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.risk-badge {
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.risk-none .risk-badge {
+    background: #e9f7ef;
+    color: #20633f;
+}
+
+.risk-borderline .risk-badge {
+    background: #fff7da;
+    color: #8a6500;
+}
+
+.risk-in-danger .risk-badge {
+    background: #ffe9de;
+    color: #9a4216;
+}
+
+.risk-early-onset .risk-badge {
+    background: #fce7e7;
+    color: #9f2d2d;
+}
+
 .notes-list {
     display: flex;
     flex-direction: column;
@@ -301,6 +340,14 @@ textarea:focus {
 
     .form-grid {
         grid-template-columns: 1fr;
+    }
+
+    .assessment-card {
+        grid-template-columns: 1fr;
+    }
+
+    .risk-badge {
+        justify-self: start;
     }
 
     .full-width {
